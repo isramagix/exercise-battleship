@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Battleship Play</title>
+    <link rel="stylesheet" href="styless.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Battleship</h1>
+    </header>
+
+    <section class="contador">
+      <p id="count">Count:</p>
+    </section>
+
+    <div class="board">
+      <div>
+        <div class="square"></div>
+        <div class="BorderRow">A</div>
+        <div class="BorderRow">B</div>
+        <div class="BorderRow">C</div>
+        <div class="BorderRow">D</div>
+        <div class="BorderRow">E</div>
+        <div class="BorderRow">F</div>
+        <div class="BorderRow">G</div>
+        <div class="BorderRow">H</div>
+        <div class="BorderRow">I</div>
+        <div class="BorderRow">J</div>
+      </div>
+      <div>
+        <div class="BorderCol">1</div>
+        <div id="b11" class="BoardTab"></div>
+        <div id="b21" class="BoardTab"></div>
+        <div id="b31" class="BoardTab"></div>
+        <div id="b41" class="BoardTab"></div>
+        <div id="b51" class="BoardTab"></div>
+        <div id="b61" class="BoardTab"></div>
+        <div id="b71" class="BoardTab"></div>
+        <div id="b81" class="BoardTab"></div>
+        <div id="b91" class="BoardTab"></div>
+        <div id="b101" class="BoardTab"></div>
+      </div>
+      <div>
+        <div class="BorderCol">2</div>
+        <div id="b12" class="BoardTab"></div>
+        <div id="b22" class="BoardTab"></div>
+        <div id="b32" class="BoardTab"></div>
+        <div id="b42" class="BoardTab"></div>
+        <div id="b52" class="BoardTab"></div>
+        <div id="b62" class="BoardTab"></div>
+        <div id="b72" class="BoardTab"></div>
+        <div id="b82" class="BoardTab"></div>
+        <div id="b92" class="BoardTab"></div>
+        <div id="b102" class="BoardTab"></div>
+      </div>
+      <div>
+        <div class="BorderCol">3</div>
+        <div id="b13" class="BoardTab"></div>
+        <div id="b23" class="BoardTab"></div>
+        <div id="b33" class="BoardTab"></div>
+        <div id="b43" class="BoardTab"></div>
+        <div id="b53" class="BoardTab"></div>
+        <div id="b63" class="BoardTab"></div>
+        <div id="b73" class="BoardTab"></div>
+        <div id="b83" class="BoardTab"></div>
+        <div id="b93" class="BoardTab"></div>
+        <div id="b103" class="BoardTab"></div>
+      </div>
+      <div>
+        <div class="BorderCol">4</div>
+        <div id="b14" class="BoardTab"></div>
+        <div id="b24" class="BoardTab"></div>
+        <div id="b34" class="BoardTab"></div>
+        <div id="b44" class="BoardTab"></div>
+        <div id="b54" class="BoardTab"></div>
+        <div id="b64" class="BoardTab"></div>
+        <div id="b74" class="BoardTab"></div>
+        <div id="b84" class="BoardTab"></div>
+        <div id="b94" class="BoardTab"></div>
+        <div id="b104" class="BoardTab"></div>
+      </div>
+      <div>
+        <div class="BorderCol">5</div>
+        <div id="b15" class="BoardTab"></div>
+        <div id="b25" class="BoardTab"></div>
+        <div id="b35" class="BoardTab"></div>
+        <div id="b45" class="BoardTab"></div>
+        <div id="b55" class="BoardTab"></div>
+        <div id="b65" class="BoardTab"></div>
+        <div id="b75" class="BoardTab"></div>
+        <div id="b85" class="BoardTab"></div>
+        <div id="b95" class="BoardTab"></div>
+        <div id="b105" class="BoardTab"></div>
+      </div>
+      <div>
+        <div class="BorderCol">6</div>
+        <div id="b16" class="BoardTab"></div>
+        <div id="b26" class="BoardTab"></div>
+        <div id="b36" class="BoardTab"></div>
+        <div id="b46" class="BoardTab"></div>
+        <div id="b56" class="BoardTab"></div>
+        <div id="b66" class="BoardTab"></div>
+        <div id="b76" class="BoardTab"></div>
+        <div id="b86" class="BoardTab"></div>
+        <div id="b96" class="BoardTab"></div>
+        <div id="b106" class="BoardTab"></div>
+      </div>
+      <div>
+        <div class="BorderCol">7</div>
+        <div id="b17" class="BoardTab"></div>
+        <div id="b27" class="BoardTab"></div>
+        <div id="b37" class="BoardTab"></div>
+        <div id="b47" class="BoardTab"></div>
+        <div id="b57" class="BoardTab"></div>
+        <div id="b67" class="BoardTab"></div>
+        <div id="b77" class="BoardTab"></div>
+        <div id="b87" class="BoardTab"></div>
+        <div id="b97" class="BoardTab"></div>
+        <div id="b107" class="BoardTab"></div>
+      </div>
+      <div>
+        <div class="BorderCol">8</div>
+        <div id="b18" class="BoardTab"></div>
+        <div id="b28" class="BoardTab"></div>
+        <div id="b38" class="BoardTab"></div>
+        <div id="b48" class="BoardTab"></div>
+        <div id="b58" class="BoardTab"></div>
+        <div id="b68" class="BoardTab"></div>
+        <div id="b78" class="BoardTab"></div>
+        <div id="b88" class="BoardTab"></div>
+        <div id="b98" class="BoardTab"></div>
+        <div id="b108" class="BoardTab"></div>
+      </div>
+      <div>
+        <div class="BorderCol">9</div>
+        <div id="b19" class="BoardTab"></div>
+        <div id="b29" class="BoardTab"></div>
+        <div id="b39" class="BoardTab"></div>
+        <div id="b49" class="BoardTab"></div>
+        <div id="b59" class="BoardTab"></div>
+        <div id="b69" class="BoardTab"></div>
+        <div id="b79" class="BoardTab"></div>
+        <div id="b89" class="BoardTab"></div>
+        <div id="b99" class="BoardTab"></div>
+        <div id="b109" class="BoardTab"></div>
+      </div>
+      <div>
+        <div class="BorderCol">10</div>
+        <div id="b110" class="BoardTab"></div>
+        <div id="b210" class="BoardTab"></div>
+        <div id="b310" class="BoardTab"></div>
+        <div id="b410" class="BoardTab"></div>
+        <div id="b510" class="BoardTab"></div>
+        <div id="b610" class="BoardTab"></div>
+        <div id="b710" class="BoardTab"></div>
+        <div id="b810" class="BoardTab"></div>
+        <div id="b910" class="BoardTab"></div>
+        <div id="b1010" class="BoardTab"></div>
+      </div>
+    </div>
+
+    <section class="buttons">
+      <button id="fire" onclick="alertFire()">Fire</button>
+      <button id="ships" onclick="showShips()">Show Ships</button>
+    </section>
+
+    <script src="script2.js"></script>
+  </body>
+</html>
