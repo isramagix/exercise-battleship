@@ -127,17 +127,32 @@ document.querySelectorAll(".BoardTab").forEach((element) => {
     }
 
     let coor = getIDElement(idDelDiv);
-    if (gameBoard[coor.x][coor.y] == 1) {
-      document.getElementById(idDelDiv).style.backgroundColor = "red";
 
+    if (gameBoard[coor.x][coor.y] == 1) {
+      let casilla = document.getElementById(idDelDiv);
+      casilla.style.background = "url('./img/bomba.gif')";
+      casilla.style.backgroundPosition = "0px 0px";
       gameBoard[coor.x][coor.y] = 3;
 
       contador = contador - 1;
+
+      if (contador === 0) {
+        // Obtener referencia al div que deseas mostrar
+        let divAMostrar = document.getElementById("alerta");
+        // Mostrar el div
+        divAMostrar.style.display = "flex"; // O cualquier otro valor para mostrar el div
+      } else {
+        // Si el contador no es igual a 0, asegúrate de que el div esté oculto
+        let divAMostrar = document.getElementById("alerta");
+        divAMostrar.style.display = "none"; // Opcional, para asegurarse de que esté oculto
+      }
+
       let parrafo = document.getElementById("count");
       parrafo.textContent = "Count: " + contador;
     } else if (gameBoard[coor.x][coor.y] == 0) {
-      document.getElementById(idDelDiv).style.backgroundColor =
-        "rgb(0,232,240)";
+      let casilla = document.getElementById(idDelDiv);
+      casilla.style.background = "none";
+      casilla.style.backgroundPosition = "0px 0px";
     }
   });
 });
@@ -178,14 +193,24 @@ function alertFire() {
     let Gid = getID(coord.x, coord.y);
 
     if (gameBoard[coord.x - 1][coord.y - 1] == 1) {
-      document.getElementById(Gid).style.backgroundColor = "red";
+      document.getElementById(Gid).style.background = "url('./img/bomba.gif')";
 
       gameBoard[coord.x - 1][coord.y - 1] = 3;
+
       contador = contador - 1;
+
+      if (contador === 0) {
+        let divAMostrar = document.getElementById("alerta");
+        divAMostrar.style.display = "flex";
+      } else {
+        let divAMostrar = document.getElementById("alerta");
+        divAMostrar.style.display = "none";
+      }
+
       let parrafo = document.getElementById("count");
       parrafo.textContent = "Count: " + contador;
     } else if (gameBoard[coord.x - 1][coord.y - 1] == 0) {
-      document.getElementById(Gid).style.backgroundColor = "rgb(0,232,240)";
+      document.getElementById(Gid).style.background = "none";
     }
 
     let long = pos.length;
@@ -197,7 +222,7 @@ function alertFire() {
 function showShips() {
   for (let i = 0; i < gameBoard.length; i++) {
     for (let j = 0; j < gameBoard[i].length; j++) {
-      if (gameBoard[i][j] == 1) {
+      if (gameBoard[i][j] == 1 || gameBoard[i][j] == 3) {
         let c = i + 1;
         let d = j + 1;
 
@@ -209,3 +234,6 @@ function showShips() {
   }
 }
 
+function Recargar() {
+  location.reload();
+}
