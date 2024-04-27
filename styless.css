@@ -64,17 +64,22 @@ h1 {
 
 .alerta {
   background-color: azure;
-  padding: 20px 80px;
-  position: absolute;
+  padding: 2vw 5vw; /* Utilizamos medidas relativas para el padding */
   border-radius: 10px;
-  left: 39%;
+  position: absolute;
+  left: 50%;
   top: 50%;
-
+  transform: translate(
+    -50%,
+    -130%
+  ); /* Centramos la alerta vertical y horizontalmente */
   display: flex;
   display: none;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
+
 .gameover {
   font-family: "Risque", serif;
   font-size: xx-large;
@@ -93,4 +98,28 @@ h1 {
 }
 .buttons button {
   margin: 10px;
+}
+
+@media only screen and (max-width: 700px) {
+  .square {
+    width: 2vw;
+    height: 2vw;
+    text-size-adjust: ;
+  }
+
+  .BorderRow {
+    width: 2vw;
+    height: 5vw;
+    font-size: 1.5vw;
+  }
+  .BorderCol {
+    width: 5vw;
+    height: 2vw;
+    font-size: 1.5vw;
+  }
+
+  .BoardTab {
+    width: 5vw;
+    height: 5vw;
+  }
 }

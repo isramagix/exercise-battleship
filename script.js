@@ -132,6 +132,7 @@ document.querySelectorAll(".BoardTab").forEach((element) => {
       let casilla = document.getElementById(idDelDiv);
       casilla.style.background = "url('./img/bomba.gif')";
       casilla.style.backgroundPosition = "0px 0px";
+      casilla.style.backgroundSize = "cover";
       gameBoard[coor.x][coor.y] = 3;
 
       contador = contador - 1;
