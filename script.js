@@ -24,50 +24,52 @@ const ship4 = [1, 1, 1];
 const ship5 = [1, 1];
 const ship6 = [1, 1];
 
-function insertarBarco(tablero, barco) {
+function insertarBarco(tablero, barco, isVertical) {
   let fila = Math.floor(Math.random() * 10);
-  let longPermitida = 10 - barco.length;
-  let posbarco = Math.floor(Math.random() * longPermitida);
+  let columna = Math.floor(Math.random() * 10);
 
+  if (isVertical) {
+    fila = Math.floor(Math.random() * (10 - barco.length));
+  } else {
+    columna = Math.floor(Math.random() * (10 - barco.length));
+  }
   // Comprobar si la posición elegida está ocupada o hay barcos adyacentes
-  if (comprobarPosicion(tablero, fila, posbarco, barco.length)) {
-    let parametro = { fil: fila, posb: posbarco };
-    modifTablero(tablero, barco, parametro);
-    return parametro;
+  if (comprobarPosicion(tablero, fila, barco.length, isVertical, columna)) {
+    modifTablero(tablero, barco, fila, columna, isVertical);
+    return { fila, columna, isVertical };
   } else {
     // Intentar de nuevo si la posición no es válida
-    return insertarBarco(tablero, barco);
+    return insertarBarco(tablero, barco, isVertical);
   }
 }
 
-function comprobarPosicion(tablero, fila, posbarco, longitud) {
+function comprobarPosicion(tablero, fila, longitud, isVertical, columna) {
   // Verificar si la posición está dentro del tablero
-  if (
-    fila < 0 ||
-    fila >= tablero.length ||
-    posbarco < 0 ||
-    posbarco + longitud > tablero[fila].length
-  ) {
-    return false;
-  }
-
-  // Comprobar si la posición está ocupada o si hay barcos adyacentes
-  for (let i = fila - 1; i <= fila + 1; i++) {
-    for (let j = posbarco - 1; j <= posbarco + longitud; j++) {
-      // Verificar si la posición está dentro del tablero y si hay un barco en esa posición
-      for (let k = posbarco; k < posbarco + longitud; k++) {
+  for (let i = 0; i < longitud; i++) {
+    let checkVertical = isVertical ? columna : columna + i;
+    let checkHorizontal = isVertical ? fila + i : fila;
+    console.log(checkVertical);
+    if (
+      checkHorizontal < 0 ||
+      checkHorizontal >= tablero.length ||
+      checkVertical < 0 ||
+      checkVertical >= tablero[checkHorizontal].length ||
+      tablero[checkHorizontal][checkVertical] === 1
+    ) {
+      return false;
+    }
+    for (let j = -1; j <= 1; j++) {
+      for (let k = -1; k <= 1; k++) {
+        let addFila = j + checkHorizontal;
+        let addColumn = k + checkVertical;
         if (
-          (i === fila - 1 ||
-            i === fila + 1 ||
-            (i === fila && (j === k - 1 || j === k + 1))) &&
-          i >= 0 &&
-          i < tablero.length &&
-          j >= 0 &&
-          j < tablero[fila].length &&
-          tablero[i][j] === 1
-        ) {
+          addFila >= 0 &&
+          addFila < 10 &&
+          addColumn >= 0 &&
+          addColumn < 10 &&
+          tablero[addFila][addColumn] === 1
+        )
           return false;
-        }
       }
     }
   }
@@ -75,15 +77,22 @@ function comprobarPosicion(tablero, fila, posbarco, longitud) {
   return true;
 }
 
-function modifTablero(tablero, barco, parametro) {
-  tablero[parametro.fil].splice(parametro.posb, barco.length, ...barco);
+function modifTablero(tablero, barco, fila, columna, isVertical) {
+  for (i = 0; i < barco.length; i++) {
+    if (isVertical) {
+      tablero[fila + i][columna] = barco[i];
+    } else {
+      tablero[fila][columna + i] = barco[i];
+    }
+  }
 }
-insertarBarco(gameBoard, ship1);
-insertarBarco(gameBoard, ship2);
-insertarBarco(gameBoard, ship3);
-insertarBarco(gameBoard, ship4);
-insertarBarco(gameBoard, ship5);
-insertarBarco(gameBoard, ship6);
+
+insertarBarco(gameBoard, ship1, Math.floor(Math.random() * 2));
+insertarBarco(gameBoard, ship2, Math.floor(Math.random() * 2));
+insertarBarco(gameBoard, ship3, Math.floor(Math.random() * 2));
+insertarBarco(gameBoard, ship4, Math.floor(Math.random() * 2));
+insertarBarco(gameBoard, ship5, Math.floor(Math.random() * 2));
+insertarBarco(gameBoard, ship6, Math.floor(Math.random() * 2));
 
 console.log(gameBoard);
 
@@ -158,82 +167,82 @@ document.querySelectorAll(".BoardTab").forEach((element) => {
   });
 });
 
-function alertFire() {
-  let pos = window.prompt("Porfavor ingresa una posición de la forma X,X");
-  if (pos != null) {
-    function getPos(pos) {
-      if (pos.length == 3) {
-        let posX = Number(pos[0]);
-        let posY = Number(pos[2]);
-        return { x: posX, y: posY };
-      } else if (pos.length == 4) {
-        if (pos[2] == "1") {
-          let posX = Number(pos[0]);
-          let posY = Number(pos[2] + pos[3]);
-          return { x: posX, y: posY };
-        } else if (pos[1] == "0") {
-          let posX = Number(pos[0] + pos[1]);
-          let posY = Number(pos[3]);
-          return { x: posX, y: posY };
-        }
-      } else if (pos.length == 5) {
-        let posX = Number(pos[0] + pos[1]);
-        let posY = Number(pos[3] + pos[4]);
-        return { x: posX, y: posY };
-      }
-    }
+// function alertFire() {
+//   let pos = window.prompt("Porfavor ingresa una posición de la forma X,X");
+//   if (pos != null) {
+//     function getPos(pos) {
+//       if (pos.length == 3) {
+//         let posX = Number(pos[0]);
+//         let posY = Number(pos[2]);
+//         return { x: posX, y: posY };
+//       } else if (pos.length == 4) {
+//         if (pos[2] == "1") {
+//           let posX = Number(pos[0]);
+//           let posY = Number(pos[2] + pos[3]);
+//           return { x: posX, y: posY };
+//         } else if (pos[1] == "0") {
+//           let posX = Number(pos[0] + pos[1]);
+//           let posY = Number(pos[3]);
+//           return { x: posX, y: posY };
+//         }
+//       } else if (pos.length == 5) {
+//         let posX = Number(pos[0] + pos[1]);
+//         let posY = Number(pos[3] + pos[4]);
+//         return { x: posX, y: posY };
+//       }
+//     }
 
-    function getID(a, b) {
-      let id = "b" + a + b;
-      return id;
-    }
+//     function getID(a, b) {
+//       let id = "b" + a + b;
+//       return id;
+//     }
 
-    let coord = getPos(pos);
-    console.log(pos);
+//     let coord = getPos(pos);
+//     console.log(pos);
 
-    let Gid = getID(coord.x, coord.y);
+//     let Gid = getID(coord.x, coord.y);
 
-    if (gameBoard[coord.x - 1][coord.y - 1] == 1) {
-      document.getElementById(Gid).style.background = "url('./img/bomba.gif')";
+//     if (gameBoard[coord.x - 1][coord.y - 1] == 1) {
+//       document.getElementById(Gid).style.background = "url('./img/bomba.gif')";
 
-      gameBoard[coord.x - 1][coord.y - 1] = 3;
+//       gameBoard[coord.x - 1][coord.y - 1] = 3;
 
-      contador = contador - 1;
+//       contador = contador - 1;
 
-      if (contador === 0) {
-        let divAMostrar = document.getElementById("alerta");
-        divAMostrar.style.display = "flex";
-      } else {
-        let divAMostrar = document.getElementById("alerta");
-        divAMostrar.style.display = "none";
-      }
+//       if (contador === 0) {
+//         let divAMostrar = document.getElementById("alerta");
+//         divAMostrar.style.display = "flex";
+//       } else {
+//         let divAMostrar = document.getElementById("alerta");
+//         divAMostrar.style.display = "none";
+//       }
 
-      let parrafo = document.getElementById("count");
-      parrafo.textContent = "Count: " + contador;
-    } else if (gameBoard[coord.x - 1][coord.y - 1] == 0) {
-      document.getElementById(Gid).style.background = "none";
-    }
+//       let parrafo = document.getElementById("count");
+//       parrafo.textContent = "Count: " + contador;
+//     } else if (gameBoard[coord.x - 1][coord.y - 1] == 0) {
+//       document.getElementById(Gid).style.background = "none";
+//     }
 
-    let long = pos.length;
-    console.log(pos);
-    console.log(long);
-  }
-}
+//     let long = pos.length;
+//     console.log(pos);
+//     console.log(long);
+//   }
+// }
 
-function showShips() {
-  for (let i = 0; i < gameBoard.length; i++) {
-    for (let j = 0; j < gameBoard[i].length; j++) {
-      if (gameBoard[i][j] == 1 || gameBoard[i][j] == 3) {
-        let c = i + 1;
-        let d = j + 1;
+// function showShips() {
+//   for (let i = 0; i < gameBoard.length; i++) {
+//     for (let j = 0; j < gameBoard[i].length; j++) {
+//       if (gameBoard[i][j] == 1 || gameBoard[i][j] == 3) {
+//         let c = i + 1;
+//         let d = j + 1;
 
-        let ID = "b" + c + d;
-        console.log(ID);
-        document.getElementById(ID).style.border = "2px solid orange";
-      }
-    }
-  }
-}
+//         let ID = "b" + c + d;
+//         console.log(ID);
+//         document.getElementById(ID).style.border = "2px solid orange";
+//       }
+//     }
+//   }
+// }
 
 function Recargar() {
   location.reload();
